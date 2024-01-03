@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const DiaryEditor = () => {
+    
+    // MutableRefObject는 DOM 요소에 접근하는 기능 제공
+    const authorInput = useRef();
+    const contentTextarea = useRef();
+
     // 여러 state의 자료형, 속성 등이 비슷하다면 여러 state를 객체로 묶어 관리할 수 있다.
     const [state, setState] = useState({
         author: "",
@@ -19,12 +24,18 @@ const DiaryEditor = () => {
     };
 
     const handleSubmit = () => {
-        if(state.author.length < 1){            
-            alert("작성자를 입력해주세요");
+        if(state.author.length < 1){
+            /* 
+            [조건 불충족시 해당 DOM 요소에 focus 주기]
+
+            authorInput.current => 현재 input 태그 요소
+            focus() => 포커스 효과
+            */
+            authorInput.current.focus();
             return;
         }            
         if(state.content.length < 5){
-            alert("내용은 최소 5글자 이상 작성해주세요")
+            contentTextarea.current.focus();            
             return;
         }            
         alert("저장되었습니다");
@@ -36,13 +47,15 @@ const DiaryEditor = () => {
             <div>
                 <input
                     name="author"
+                    ref={authorInput}
                     value={state.author}
                     onChange={handleChangeState}
-                />
+                    />
             </div>
             <div>
                 <textarea
-                    name="content"
+                    name="content"                    
+                    ref={contentTextarea}
                     value={state.content}
                     onChange={handleChangeState}
                 />
