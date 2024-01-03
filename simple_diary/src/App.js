@@ -1,36 +1,37 @@
 import './App.css';
 import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
-
-const dummyList = [
-  {
-    id: 1,
-    author: "김주영",
-    content: "안녕하십니까!",
-    emotion: 5,
-    created_date: new Date().getTime() // 시간 객체 생성 (인자 없으면 현재 시간 기준)
-  },
-  {
-    id: 2,
-    author: "홍길동",
-    content: "ㅎㅎㅎㅎㅎㅎㅎㅎ",
-    emotion: 3,
-    created_date: new Date().getTime() 
-  },
-  {
-    id: 3,
-    author: "가나다",
-    content: "ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ",
-    emotion: 1,
-    created_date: new Date().getTime() 
-  },
-]
+import {useRef, useState} from "react";
 
 function App() {
+  // 전역적으로 관리하는 state
+  const [data, setData] = useState([]); // 빈 배열로 초기값 세팅
+
+  /*
+  useRef를 사용하여 dataId를 관리하는 이유는 컴포넌트의 렌더링과 독립적으로 값을 유지하고 변경할 수 있기 때문.
+  여기서 dataId는 일기 데이터의 고유 식별자로 사용되며, 이 값이 변해도 컴포넌트의 리렌더링을 유발하지 않아야 한다.
+  */
+  const dataId = useRef(0);
+
+  // 일기 배열에 새로운 데이터 추가하는 함수
+  const onCreate = (author, content, emotion) => {
+    const created_date = new Date().getTime();
+    const newItem = {
+      author, 
+      content,
+      emotion,
+      created_date, 
+      id: dataId.current
+    }
+    dataId.current += 1;
+
+    setData([newItem, ...data]);
+  }
+
   return (
     <div className="App">       
-      <DiaryEditor />
-      <DiaryList diaryList={dummyList}/>
+      <DiaryEditor onCreate={onCreate} />
+      <DiaryList diaryList={data}/>
     </div>
   );
 }

@@ -1,19 +1,19 @@
 import { useRef, useState } from "react";
 
-const DiaryEditor = () => {
+const DiaryEditor = ({ onCreate }) => {
     
     // MutableRefObject는 DOM 요소에 접근하는 기능 제공
     const authorInput = useRef();
     const contentTextarea = useRef();
 
     // 여러 state의 자료형, 속성 등이 비슷하다면 여러 state를 객체로 묶어 관리할 수 있다.
-    const [state, setState] = useState({
+    const baseState = {
         author: "",
         content: "",
         emotion: 1,
-    });
-    // const [author, setAuthor] = useState("");
-    // const [content, setContent] = useState("");
+    }
+    
+    const [state, setState] = useState(baseState);
 
     // setState 함수도 중복되는 부분을 다음과 같이 합쳐주자
     const handleChangeState = (e) => {
@@ -38,7 +38,9 @@ const DiaryEditor = () => {
             contentTextarea.current.focus();            
             return;
         }            
+        onCreate(state.author, state.content, state.emotion);
         alert("저장되었습니다");
+        setState(baseState);
     }
 
     return (
