@@ -4,7 +4,7 @@ const DiaryEditor = ({ onCreate }) => {
     
     // MutableRefObject는 DOM 요소에 접근하는 기능 제공
     const authorInput = useRef();
-    const contentTextarea = useRef();
+    const contentTextarea = useRef();    
 
     // 여러 state의 자료형, 속성 등이 비슷하다면 여러 state를 객체로 묶어 관리할 수 있다.
     const baseState = {
@@ -35,7 +35,7 @@ const DiaryEditor = ({ onCreate }) => {
             return;
         }            
         if(state.content.length < 5){
-            contentTextarea.current.focus();            
+            contentTextarea.current.focus();
             return;
         }            
         onCreate(state.author, state.content, state.emotion);
@@ -52,7 +52,7 @@ const DiaryEditor = ({ onCreate }) => {
                     ref={authorInput}
                     value={state.author}
                     onChange={handleChangeState}
-                    />
+                />
             </div>
             <div>
                 <textarea
