@@ -17,6 +17,7 @@ const UnmountTest = () => {
 }
 
 const Lifecycle = () => {
+    // 왼쪽: getter, 오른쪽: setter
     const [count, setCount] = useState(0);
     const [text, setText] = useState("");
 
