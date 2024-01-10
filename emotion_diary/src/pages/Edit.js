@@ -23,6 +23,9 @@ const Edit = () => {
             <button onClick={()=>{navigate(-2)}}> 
                 두 페이지 전으로 가기 
             </button>
+            <iframe src="https://codesandbox.io/embed/new?codemirror=1" className="sandbox" title="New Sandbox" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"></iframe>
+
+            
         </div>
 )
 }
